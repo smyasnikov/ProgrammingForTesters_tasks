@@ -7,7 +7,7 @@ public class AlsoGroupCreationTests extends TestBase {
   @Test
   public void testNonEmptyGroupCreation() throws Exception {
     openMainPage();
-    openGroupsPage();
+    openPage("groups");
     initGroupCreation();
     GroupData group = new GroupData();
     group.groupName = "group1";
@@ -15,17 +15,17 @@ public class AlsoGroupCreationTests extends TestBase {
     group.footer = "footer1";
 	fillGroupForm(group);
     submitGroupCreation();
-    returnToGroupsPage();
+    returnToPage("group page");
   }
   
   @Test
   public void testEmptyGroupCreation() throws Exception {
     openMainPage();
-    openGroupsPage();
+    openPage("groups");
     initGroupCreation();
     fillGroupForm(new GroupData("", "", ""));
     submitGroupCreation();
-    returnToGroupsPage();
+    returnToPage("group page");
   }
 
 }

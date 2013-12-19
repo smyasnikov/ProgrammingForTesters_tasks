@@ -10,10 +10,12 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
+
 
 public class TestBase {
 
@@ -29,6 +31,8 @@ public class TestBase {
 	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	  }
 	
+
+	
 	@AfterTest
 	public void tearDown() throws Exception {
 	    driver.quit();
@@ -37,9 +41,11 @@ public class TestBase {
 	      fail(verificationErrorString);
 	    }
 	  }
+	
 
-	protected void returnToGroupsPage() {
-		driver.findElement(By.linkText("group page")).click();
+
+	public void returnToPage(String pageName) {
+		driver.findElement(By.linkText(pageName)).click();
 	}
 
 	protected void submitGroupCreation() {
@@ -59,8 +65,8 @@ public class TestBase {
 		driver.findElement(By.name("new")).click();
 	}
 
-	protected void openGroupsPage() {
-		driver.findElement(By.linkText("groups")).click();
+	public void openPage(String pageName) {
+		driver.findElement(By.linkText(pageName)).click();
 	}
 
 	protected void openMainPage() {
@@ -77,6 +83,7 @@ public class TestBase {
 	      return false;
 	    }
 	  }
+	
 
 	private boolean isAlertPresent() {
 	    try {
@@ -86,7 +93,8 @@ public class TestBase {
 	      return false;
 	    }
 	  }
-
+	
+	
 	private String closeAlertAndGetItsText() {
 	    try {
 	      Alert alert = driver.switchTo().alert();
@@ -101,5 +109,33 @@ public class TestBase {
 	      acceptNextAlert = true;
 	    }
 	  }
+
+		protected void fillContractForm(ContractData parameterObject) {
+		driver.findElement(By.name("firstname")).clear();
+	    driver.findElement(By.name("firstname")).sendKeys(parameterObject.firstName);
+	    driver.findElement(By.name("lastname")).clear();
+	    driver.findElement(By.name("lastname")).sendKeys(parameterObject.lastName);
+	    driver.findElement(By.name("address")).clear();
+	    driver.findElement(By.name("address")).sendKeys(parameterObject.address);
+	    driver.findElement(By.name("home")).clear();
+	    driver.findElement(By.name("home")).sendKeys(parameterObject.homePhone);
+	    driver.findElement(By.name("mobile")).clear();
+	    driver.findElement(By.name("mobile")).sendKeys(parameterObject.mobilePhone);
+	    driver.findElement(By.name("work")).clear();
+	    driver.findElement(By.name("work")).sendKeys(parameterObject.workPhone);
+	    driver.findElement(By.name("email")).clear();
+	    driver.findElement(By.name("email")).sendKeys(parameterObject.email);
+	    driver.findElement(By.name("email2")).clear();
+	    driver.findElement(By.name("email2")).sendKeys(parameterObject.email2);
+	    new Select(driver.findElement(By.name("bday"))).selectByVisibleText(parameterObject.bDay);
+	    new Select(driver.findElement(By.name("bmonth"))).selectByVisibleText(parameterObject.bMonth);
+	    driver.findElement(By.name("byear")).clear();
+	    driver.findElement(By.name("byear")).sendKeys(parameterObject.bYear);
+	    new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(parameterObject.group);
+	    driver.findElement(By.name("address2")).clear();
+	    driver.findElement(By.name("address2")).sendKeys(parameterObject.address2);
+	    driver.findElement(By.name("phone2")).clear();
+	    driver.findElement(By.name("phone2")).sendKeys(parameterObject.phone2);
+	}
 
 }

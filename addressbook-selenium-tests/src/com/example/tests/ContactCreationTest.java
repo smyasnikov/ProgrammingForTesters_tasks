@@ -7,7 +7,7 @@ public class ContactCreationTest extends TestBase{
   @Test
   public void testContactCreation() throws Exception {
 	openMainPage();
-	openPage("add new");
+	openAddNewPage();
 	ContractData contract = new ContractData();
 	contract.firstName = "FirstName1";
 	contract.lastName = "LastName1";
@@ -25,6 +25,6 @@ public class ContactCreationTest extends TestBase{
 	contract.phone2 = "home1";
 	fillContractForm(contract);
     submitGroupCreation();
-    returnToPage("home");
+    returnToHomePage();
   }
 }

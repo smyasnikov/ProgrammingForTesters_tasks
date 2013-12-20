@@ -44,8 +44,12 @@ public class TestBase {
 	
 
 
-	public void returnToPage(String pageName) {
-		driver.findElement(By.linkText(pageName)).click();
+	public void returnToGroupPage() {
+		driver.findElement(By.linkText("group page")).click();
+	}
+	
+	public void returnToHomePage() {
+		driver.findElement(By.linkText("home")).click();
 	}
 
 	protected void submitGroupCreation() {
@@ -65,8 +69,12 @@ public class TestBase {
 		driver.findElement(By.name("new")).click();
 	}
 
-	public void openPage(String pageName) {
-		driver.findElement(By.linkText(pageName)).click();
+	public void openGroupPage() {
+		driver.findElement(By.linkText("groups")).click();
+	}
+	
+	public void openAddNewPage() {
+		driver.findElement(By.linkText("add new")).click();
 	}
 
 	protected void openMainPage() {

@@ -1,6 +1,6 @@
 package com.example.tests;
 
-public class ContractData {
+public class ContactData {
 	public String firstName;
 	public String lastName;
 	public String address;
@@ -16,7 +16,7 @@ public class ContractData {
 	public String address2;
 	public String phone2;
 
-	public ContractData(String firstName, String lastName, String address,
+	public ContactData(String firstName, String lastName, String address,
 			String homePhone, String mobilePhone, String workPhone,
 			String email, String email2, String bDay, String bMonth,
 			String bYear, String group, String address2, String phone2) {
@@ -36,7 +36,7 @@ public class ContractData {
 		this.phone2 = phone2;
 	}
 	
-	public ContractData() {
+	public ContactData() {
 		
 	}
 }

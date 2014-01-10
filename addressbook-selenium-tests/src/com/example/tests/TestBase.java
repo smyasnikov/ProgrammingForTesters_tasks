@@ -52,7 +52,7 @@ public class TestBase {
 	@DataProvider
 	public Iterator<Object[]> randomValidContactsGenerator() {
 		List<Object[]> list = new ArrayList<Object[]>();
-		for (int i=0; i<3; i++) {
+		for (int i=0; i<5; i++) {
 			ContactData contact = new ContactData();
 			contact.firstName = generateRandomString();
 			contact.lastName = generateRandomString();
@@ -65,7 +65,7 @@ public class TestBase {
 			contact.bDay = generateRandomDay();
 			contact.bMonth = generateRandomMonth();
 			contact.bYear = generateRandomYear();
-			contact.group = "group1";
+			contact.group = selectRandomGroup();
 			contact.address2 = generateRandomString();
 			contact.phone2 = generateRandomNumber();
 					
@@ -116,6 +116,16 @@ public class TestBase {
 				return "June";
 			}
 		}
+			
+	}
+	
+	public String selectRandomGroup()
+	{
+		Random rnd = new Random();
+		int index=rnd.nextInt(35);
+		app.getNavigationHelper().openMainPage();
+		app.getNavigationHelper().openGroupPage();
+		return app.getGroupHelper().getGroups().get(index).name;
 			
 	}
   

@@ -43,8 +43,8 @@ public class ContactData implements Comparable<ContactData>{
 	@Override
 	public String toString() {
 		return "ContactData [firstName=" + firstName + ", lastName=" + lastName
-				+ /*", homePhone=" + homePhone +*/ ", email=" + email + ", email2="
-				+ email2 + "]";
+				+ ", homePhone=" + homePhone + ", email=" + email /*+ ", email2="
+				+ email2*/ + "]";
 	}
 
 	@Override
@@ -76,21 +76,21 @@ public class ContactData implements Comparable<ContactData>{
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (email2 == null) {
+		/*if (email2 == null) {
 			if (other.email2 != null)
 				return false;
 		} else if (!email2.equals(other.email2))
-			return false;
+			return false;*/
 		if (firstName == null) {
 			if (other.firstName != null)
 				return false;
 		} else if (!firstName.equals(other.firstName))
 			return false;
-		/*if (homePhone == null) {
+		if (homePhone == null) {
 			if (other.homePhone != null)
 				return false;
 		} else if (!homePhone.equals(other.homePhone))
-			return false;*/
+			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
 				return false;

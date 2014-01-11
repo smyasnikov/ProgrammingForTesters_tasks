@@ -3,6 +3,7 @@ package com.example.fw;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -53,8 +54,10 @@ public class ContactHelper extends HelperBase{
 	
 	public List<ContactData> getContacts() {
 		List<ContactData> contacts = new ArrayList<ContactData>();
-		List<WebElement> checkboxes = driver.findElements(By.name("selected[]"));
 		
+		
+		 List<WebElement> checkboxes = driver.findElements(By.name("selected[]"));
+		/*
 		for (WebElement checkbox : checkboxes) {
 			ContactData contact = new ContactData();
 			String accept=checkbox.getAttribute("accept");
@@ -99,8 +102,25 @@ public class ContactHelper extends HelperBase{
 			
 			contacts.add(contact);
 		}
+		*/
+		int i=2;
+		for (WebElement checkbox : checkboxes) {
+			
+			ContactData contact = new ContactData();
+			WebElement celli2=driver.findElement(By.xpath("//tr["+i+"]/td[2]"));
+			WebElement celli3=driver.findElement(By.xpath("//tr["+i+"]/td[3]"));
+			WebElement celli4=driver.findElement(By.xpath("//tr["+i+"]/td[4]/a"));
+			WebElement celli5=driver.findElement(By.xpath("//tr["+i+"]/td[5]"));
+			
+			contact.lastName=celli2.getText();
+			contact.firstName=celli3.getText();
+			contact.email=celli4.getText();
+			contact.homePhone=celli5.getText();
+			i=i+1;
+			
+			contacts.add(contact);
+		}
 		
-		//save homePhone	-- do not use now
 	
 		return contacts;
 	}

@@ -30,10 +30,11 @@ public class TestBase {
 	public Iterator<Object[]> randomValidGroupsGenerator() {
 		List<Object[]> list = new ArrayList<Object[]>();
 		for (int i=0; i<5; i++) {
-			GroupData group = new GroupData();
-			group.name=generateRandomString();
-			group.header=generateRandomString();
-			group.footer=generateRandomString();
+			GroupData group = new GroupData()
+			.withName(generateRandomString())
+			.withHeader(generateRandomString())
+			.withFooter(generateRandomString());
+			
 			list.add(new Object[]{group});
 		}
 		return list.iterator();
@@ -52,23 +53,22 @@ public class TestBase {
 	@DataProvider
 	public Iterator<Object[]> randomValidContactsGenerator() {
 		List<Object[]> list = new ArrayList<Object[]>();
-		for (int i=0; i<5; i++) {
-			ContactData contact = new ContactData();
-			contact.firstName = generateRandomString();
-			contact.lastName = generateRandomString();
-			contact.address = generateRandomString();
-			contact.homePhone = generateRandomNumber();
-			contact.mobilePhone = generateRandomNumber();
-			contact.workPhone = generateRandomNumber();
-			contact.email = generateRandomString();
-			contact.email2 = generateRandomString();
-			contact.bDay = generateRandomDay();
-			contact.bMonth = generateRandomMonth();
-			contact.bYear = generateRandomYear();
-			contact.group = selectRandomGroup();
-			contact.address2 = generateRandomString();
-			contact.phone2 = generateRandomNumber();
-					
+		for (int i=0; i<1; i++) {
+			ContactData contact = new ContactData()
+			.withFirstName(generateRandomString())
+			.withLastName(generateRandomString())
+			.withAddress(generateRandomString())
+			.withHomePhone(generateRandomNumber())
+			.withMobilePhone(generateRandomNumber())
+			.withWorkPhone(generateRandomNumber())
+			.withEmail(generateRandomString())
+			.withEmail2(generateRandomString())
+			.withBDay(generateRandomDay())
+			.withBMonth(generateRandomMonth())
+			.withBYear(generateRandomYear())
+			.withGroup(selectRandomGroup())
+			.withaddress2(generateRandomString())
+			.withPhone2(generateRandomNumber());
 			list.add(new Object[]{contact});
 		}
 		return list.iterator();
@@ -123,9 +123,9 @@ public class TestBase {
 	{
 		Random rnd = new Random();
 		int index=rnd.nextInt(35);
-		app.getNavigationHelper().openMainPage();
-		app.getNavigationHelper().openGroupPage();
-		return app.getGroupHelper().getGroups().get(index).name;
+		app.navigateTo().mainPage();
+		app.navigateTo().groupPage();
+		return app.getGroupHelper().getGroups().get(index).getName();
 			
 	}
   

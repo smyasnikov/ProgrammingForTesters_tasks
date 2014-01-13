@@ -1,15 +1,12 @@
 package com.example.fw;
 
-import static com.example.fw.ContactHelper.CREATION;
-import static com.example.fw.ContactHelper.MODIFICATION;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.example.tests.ContactData;
+import com.example.utils.SortedListOf;
 
 public class ContactHelper extends HelperBase{
 	
@@ -45,9 +42,9 @@ public class ContactHelper extends HelperBase{
 		return this;
 		}
 	
-	private List<ContactData> cachedContacts;
+	private SortedListOf<ContactData> cachedContacts;
 	
-	public List<ContactData> getContacts() {
+	public SortedListOf<ContactData> getContacts() {
 		if (cachedContacts==null)
 		{
 			rebuildCache();
@@ -56,7 +53,7 @@ public class ContactHelper extends HelperBase{
 	}
 	
 	private void rebuildCache() {
-		cachedContacts = new ArrayList<ContactData>();
+		cachedContacts = new SortedListOf<ContactData>();
 				
 		List<WebElement> checkboxes = driver.findElements(By.name("selected[]"));
 		int i=2;

@@ -1,6 +1,8 @@
 package com.example.tests;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.example.fw.ApplicationManager;
+import com.thoughtworks.xstream.XStream;
 
 public class ContactDataGenerator {
 	
@@ -49,9 +52,13 @@ public class ContactDataGenerator {
 		}
  	}
 
-	private static void saveContactsToXmlFile(List<ContactData> contacts, File file) {
-	
-		
+	public static void saveContactsToXmlFile(List<ContactData> contacts, File file) throws IOException {
+		XStream xstream = new XStream();
+		xstream.alias("contact", ContactData.class);
+		String xml = xstream.toXML(contacts);
+		FileWriter writer = new FileWriter(file);
+		writer.write(xml);
+		writer.close();
 	}
 
 	private static void saveContactsToCsvFile(List<ContactData> contacts, File file) throws IOException {
@@ -64,6 +71,41 @@ public class ContactDataGenerator {
 					+ "\n");
 		}
 		writer.close();
+	}
+	
+	public static List<ContactData> loadContactsFromCsvFile(File file) throws IOException {
+		List<ContactData> list = new ArrayList<ContactData>();
+		FileReader reader = new FileReader(file);
+		BufferedReader bufferedReader=new BufferedReader(reader);
+		String line=bufferedReader.readLine();
+		while (line != null) {
+			String[] part = line.split(",");
+			ContactData contact = new ContactData()
+			.withFirstName(part[0])
+			.withLastName(part[1])
+			.withAddress(part[2])
+			.withHomePhone(part[3])
+			.withMobilePhone(part[4])
+			.withWorkPhone(part[5])
+			.withEmail(part[6])
+			.withEmail2(part[7])
+			.withBDay(part[8])
+			.withBMonth(part[9])
+			.withBYear(part[10])
+			.withGroup(part[11])
+			.withaddress2(part[12])
+			.withPhone2(part[13]);
+			list.add(contact);
+			line=bufferedReader.readLine();
+		}
+		bufferedReader.close();
+		return list;
+	}
+
+	public static List<ContactData> loadContactsFromXmlFile(File file) {
+		XStream xstream = new XStream();
+		xstream.alias("contact", ContactData.class);
+		return (List<ContactData>) xstream.fromXML(file);
 	}
 
 	public static List<ContactData> generateRandomContacts(int amount) {

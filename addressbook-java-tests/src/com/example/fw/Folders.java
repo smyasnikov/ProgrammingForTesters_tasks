@@ -47,5 +47,11 @@ public class Folders {
 			return false;
 		return true;
 	}
+
+	public Folders without(int index) {
+		Folders newList = new Folders(storedFolders);
+		newList.storedFolders.remove(index);
+		return newList;
+	}
 	
 }

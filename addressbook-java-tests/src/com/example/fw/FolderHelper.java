@@ -31,4 +31,13 @@ public class FolderHelper extends HelperBase {
 		new JButtonOperator(dialog, "OK").push();
 		return waitMessageDialog("Warning", 3000);
 	}
+	public int getTreeSize() {
+		JTreeOperator tree = new JTreeOperator(mainFrame);
+		return tree.getChildren(tree.getRoot()).length;
+	}
+	public void removeFolderByIndex(int index) {
+		new JTreeOperator(mainFrame).selectRow(index);
+		manager.getMenuHelper().pushDeleteButton();
+		new JButtonOperator(new JDialogOperator(mainFrame), "Yes").push();
+	}	
 }

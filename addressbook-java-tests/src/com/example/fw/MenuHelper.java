@@ -13,4 +13,8 @@ public class MenuHelper extends HelperBase{
 		menu.pushMenuNoBlock("File|New Folder...");
 	}
 
+	public void pushDeleteButton() {
+		new JMenuBarOperator(mainFrame).pushMenuNoBlock("File|Delete");
+	}
+
 }

@@ -16,7 +16,7 @@ public class ContactModificationTest extends TestBase{
 		app.navigateTo().mainPage();
 		
 		// save old stage
-		SortedListOf<ContactData> oldList = app.getContactHelper().getContacts();
+		SortedListOf<ContactData> oldList = app.getContactHelper().getUIContacts();
 		
 		Random rnd = new Random();
 	    int index = rnd.nextInt(oldList.size()-1);
@@ -26,7 +26,7 @@ public class ContactModificationTest extends TestBase{
 	    
 		
 		// save new stage
-	    SortedListOf<ContactData> newList = app.getContactHelper().getContacts();
+	    SortedListOf<ContactData> newList = app.getContactHelper().getUIContacts();
 	    
 	    // compare states
 	    assertThat(newList, equalTo(oldList.without(index).withAdded(contact)));

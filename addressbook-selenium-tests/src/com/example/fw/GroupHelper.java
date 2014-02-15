@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import com.example.tests.GroupData;
 import com.example.utils.SortedListOf;
 
-public class GroupHelper extends HelperBase{
+public class GroupHelper extends WebDriverHelperBase{
 
 	public GroupHelper(ApplicationManager manager) {
 		super(manager);
@@ -20,7 +20,9 @@ public class GroupHelper extends HelperBase{
 	   	fillGroupForm(group);
 	    submitGroupCreation();
 	    returnToGroupPage();
-	    rebuildCache();
+	    //update model
+	    manager.getModel().addGroup(group);
+	    //rebuildCache();
 	 return this;		
 	}
 	
@@ -29,7 +31,9 @@ public class GroupHelper extends HelperBase{
 		selectGroupByIndex(index);
 		submitGroupDelition();
 		returnToGroupPage();
-		rebuildCache();
+		//update model
+		manager.getModel().removeGroup(index);
+		//rebuildCache();
 		return this;
 	}
 	
@@ -39,11 +43,26 @@ public class GroupHelper extends HelperBase{
 		fillGroupForm(group);
 		submitGroupModification();
 		returnToGroupPage();
-		rebuildCache();
+		//update model
+		manager.getModel().removeGroup(index).addGroup(group);
+		//rebuildCache();
 		return this;		
 	}
 	
-	private SortedListOf<GroupData> cachedGroups;
+	public SortedListOf<GroupData> getUIGroups() {
+		SortedListOf<GroupData> groups = new SortedListOf<GroupData>();
+		
+		manager.navigateTo().groupPage();
+		List<WebElement> checkboxes = driver.findElements(By.name("selected[]"));
+		for (WebElement checkbox : checkboxes) {
+			String title=checkbox.getAttribute("title");
+			String name=title.substring("Select (".length(), title.length()-")".length());
+			groups.add(new GroupData().withName(name));
+		}
+		return groups;
+	}
+	
+	/*private SortedListOf<GroupData> cachedGroups;
 	
 	public SortedListOf<GroupData> getGroups() {
 		if (cachedGroups==null)
@@ -53,7 +72,7 @@ public class GroupHelper extends HelperBase{
 		return cachedGroups;		
 	}
 
-private void rebuildCache() {
+	private void rebuildCache() {
 	cachedGroups = new SortedListOf<GroupData>();
 	
 	manager.navigateTo().groupPage();
@@ -65,7 +84,7 @@ private void rebuildCache() {
 	}
 		
 	}
-
+*/
 	//--------------------------------------------------------------------------------------------
 	public GroupHelper initGroupCreation() {
 		
@@ -75,7 +94,7 @@ private void rebuildCache() {
 
 	public GroupHelper submitGroupCreation() {
 		click(By.name("submit"));
-		cachedGroups=null;
+		//cachedGroups=null;
 		return this;
 		}
 
@@ -106,14 +125,14 @@ private void rebuildCache() {
 
 	public GroupHelper submitGroupModification() {
 		click(By.name("update"));
-		cachedGroups=null;
+		//cachedGroups=null;
 		return this;
 		}
 	
 
 	public void submitGroupDelition() {
 		click(By.name("delete"));
-		cachedGroups=null;
+		//cachedGroups=null;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.example.tests;
 
 public class ContactData implements Comparable<ContactData>{
+	private String id;
 	private String firstName;
 	private String lastName;
 	private String address;
@@ -188,6 +189,69 @@ public class ContactData implements Comparable<ContactData>{
 		return this;
 	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setHomePhone(String homePhone) {
+		this.homePhone = homePhone;
+	}
+
+	public void setMobilePhone(String mobilePhone) {
+		this.mobilePhone = mobilePhone;
+	}
+
+	public void setWorkPhone(String workPhone) {
+		this.workPhone = workPhone;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setEmail2(String email2) {
+		this.email2 = email2;
+	}
+
+	public void setbDay(String bDay) {
+		this.bDay = bDay;
+	}
+
+	public void setbMonth(String bMonth) {
+		this.bMonth = bMonth;
+	}
+
+	public void setbYear(String bYear) {
+		this.bYear = bYear;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	public void setPhone2(String phone2) {
+		this.phone2 = phone2;
+	}
+	
+	public String getId() {
+		return id;
+	}
 	public String getFirstName() {
 		return firstName;
 	}

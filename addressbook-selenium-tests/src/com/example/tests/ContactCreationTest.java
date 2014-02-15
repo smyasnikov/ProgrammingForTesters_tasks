@@ -28,14 +28,14 @@ public class ContactCreationTest extends TestBase{
 	app.navigateTo().mainPage();
 	
 	// save old stage
-	SortedListOf<ContactData> oldList = app.getContactHelper().getContacts();
+	SortedListOf<ContactData> oldList = new SortedListOf<ContactData>(app.getHibernateHelper().listContacts());
 		
 	//actions
 	app.getContactHelper().createContact(contact);
 	
     
     // save new stage
-	SortedListOf<ContactData> newList = app.getContactHelper().getContacts();
+	SortedListOf<ContactData> newList = new SortedListOf<ContactData>(app.getHibernateHelper().listContacts());
     
     // compare states
     //assertEquals(newList.size(), oldList.size()+1);

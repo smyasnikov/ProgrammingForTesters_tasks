@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import com.example.tests.ContactData;
 import com.example.utils.SortedListOf;
 
-public class ContactHelper extends HelperBase{
+public class ContactHelper extends WebDriverHelperBase{
 	
 	public static boolean CREATION = true;
 	public static boolean MODIFICATION = false;
@@ -21,7 +21,9 @@ public class ContactHelper extends HelperBase{
 		manager.navigateTo().addNewPage();
 		fillContactForm(contact, CREATION).submitContractCreation();
 		manager.navigateTo().homePage();
-		rebuildCache();
+		//update model
+	    manager.getModel().addContact(contact);
+	    //rebuildCache();
 		return this;
 	}
 	
@@ -30,7 +32,9 @@ public class ContactHelper extends HelperBase{
 	    fillContactForm(contact, MODIFICATION);
 	    submitContactModification();
 		manager.navigateTo().homePage();
-		rebuildCache();
+		//update model
+		manager.getModel().removeContact(index).addContact(contact);
+		//rebuildCache();
 		return this;
 	}
 	
@@ -38,11 +42,44 @@ public class ContactHelper extends HelperBase{
 		initContactModification(index);
 		submitContactDeletion();
 		manager.navigateTo().homePage();
-		rebuildCache();
+		//update model
+		manager.getModel().removeContact(index);
+		//rebuildCache();
 		return this;
 		}
 	
-	private SortedListOf<ContactData> cachedContacts;
+	public SortedListOf<ContactData> getUIContacts() {
+		SortedListOf<ContactData> contacts = new SortedListOf<ContactData>();
+				
+		List<WebElement> checkboxes = driver.findElements(By.name("selected[]"));
+		int i=2;
+		for (WebElement checkbox : checkboxes) {
+			
+			
+			WebElement celli2=driver.findElement(By.xpath("//tr["+i+"]/td[2]"));
+			WebElement celli3=driver.findElement(By.xpath("//tr["+i+"]/td[3]"));
+			WebElement celli4=driver.findElement(By.xpath("//tr["+i+"]/td[4]/a"));
+			WebElement celli5=driver.findElement(By.xpath("//tr["+i+"]/td[5]"));
+			
+			String lastName=celli2.getText();
+			String firstName=celli3.getText();
+			String email=celli4.getText();
+			String homePhone=celli5.getText();
+			
+			ContactData contact = new ContactData()
+			.withLastName(lastName)
+			.withFirstName(firstName)
+			.withEmail(email)
+			.withHomePhone(homePhone);
+			i=i+1;
+			
+			contacts.add(contact);
+		}
+	return contacts;
+	}
+
+	
+	/*private SortedListOf<ContactData> cachedContacts;
 	
 	public SortedListOf<ContactData> getContacts() {
 		if (cachedContacts==null)
@@ -79,22 +116,18 @@ public class ContactHelper extends HelperBase{
 			
 			cachedContacts.add(contact);
 		}
-
-	//----------------------------------------------------------------------------------------------
-
 	
-		
-	}
+	}*/
 
 	public ContactHelper submitContractCreation() {
 		click(By.name("submit"));
-		cachedContacts=null;
+		//cachedContacts=null;
 		return this;
 	}
 
 	private void submitContactDeletion() {
 		click(By.xpath("//input[@value='Delete']"));
-		cachedContacts=null;
+		//cachedContacts=null;
 	}
 
 	public ContactHelper initContactModification(int index) {
@@ -105,7 +138,7 @@ public class ContactHelper extends HelperBase{
 
 	public ContactHelper submitContactModification() {
 		click(By.xpath("//input[@value='Update']"));
-		cachedContacts=null;
+		//cachedContacts=null;
 		return this;
 		}
 	
@@ -126,11 +159,11 @@ public class ContactHelper extends HelperBase{
 	    	selectByText(By.name("new_group"), contact.getGroup());
 	    }
 	    else
-	    {
+	    {/*
 	    	if(driver.findElements(By.name("new group")).size()!=0)
 	    	{
 	    		throw new Error("It's possible to select group during modification");
-	    	}
+	    	}*/
 	    }
 	    
 	    type("address2", contact.getAddress2());

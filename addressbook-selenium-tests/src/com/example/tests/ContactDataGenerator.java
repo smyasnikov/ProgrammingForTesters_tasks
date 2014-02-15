@@ -2,20 +2,24 @@ package com.example.tests;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
 import com.example.fw.ApplicationManager;
+import com.example.fw.HibernateHelper;
+import com.example.utils.SortedListOf;
 import com.thoughtworks.xstream.XStream;
 
 public class ContactDataGenerator {
 	
-	static protected ApplicationManager app;
-
+	protected static ApplicationManager app;
+	
 	public static void main(String[] args) throws IOException {
 		if (args.length<3)
 		{
@@ -155,7 +159,7 @@ public class ContactDataGenerator {
 		
 		public static String generateRandomDay()
 		{
-			return ""+(int)(Math.random() * 29);
+			return ""+(int)(1+Math.random() * 28);
 				
 		}
 		
@@ -186,18 +190,13 @@ public class ContactDataGenerator {
 				
 		}
 		
-		public static String selectRandomGroup()
+		public static String selectRandomGroup() 
 		{
-			return "group1";
-			
-			// to do without app
-		/*
 			Random rnd = new Random();
-			int index=rnd.nextInt(35);
-			app.navigateTo().mainPage();
-			app.navigateTo().groupPage();
-			return app.getGroupHelper().getGroups().get(index).getName();
-		*/
-				
+			HibernateHelper hibernetHelper = new HibernateHelper(app);
+			int qty_groups=hibernetHelper.listGroups().size();
+			int index=rnd.nextInt(qty_groups);
+			String groupName = hibernetHelper.listGroups().get(index).getName();
+			return groupName;	
 		}
 }

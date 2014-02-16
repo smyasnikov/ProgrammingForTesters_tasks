@@ -36,4 +36,21 @@ public class HibernateHelper extends HelperBase {
           trans.commit();
 		}
 	}
+	
+	public List<ContactData> listContactsForMainPage() {
+		SortedListOf<ContactData> contacts = new SortedListOf<ContactData>(listContacts());
+		for (ContactData contact : contacts) {
+			contact.setAddress(null);
+			contact.setMobilePhone(null);
+			contact.setWorkPhone(null);
+			contact.setEmail2(null);
+			contact.setbDay(null);
+			contact.setbMonth(null);
+			contact.setbYear(null);
+			contact.setAddress2(null);
+			contact.setPhone2(null);		
+		}
+		return contacts;
+	}
+	
 }

@@ -48,34 +48,97 @@ public class ContactHelper extends WebDriverHelperBase{
 		return this;
 		}
 	
-	public SortedListOf<ContactData> getUIContacts() {
+	public SortedListOf<ContactData> getUIContacts(Boolean formType) {
 		SortedListOf<ContactData> contacts = new SortedListOf<ContactData>();
 				
-		List<WebElement> checkboxes = driver.findElements(By.name("selected[]"));
-		int i=2;
-		for (WebElement checkbox : checkboxes) {
+		if (formType == CREATION)
+		{
+			List<WebElement> checkboxes = driver.findElements(By.name("selected[]"));
+			int i=2;
+			for (WebElement checkbox : checkboxes) 
+			{
+				WebElement celli2=driver.findElement(By.xpath("//tr["+i+"]/td[2]"));
+				WebElement celli3=driver.findElement(By.xpath("//tr["+i+"]/td[3]"));
+				WebElement celli4=driver.findElement(By.xpath("//tr["+i+"]/td[4]/a"));
+				WebElement celli5=driver.findElement(By.xpath("//tr["+i+"]/td[5]"));
 			
+				String lastName=celli2.getText();
+				String firstName=celli3.getText();
+				String email=celli4.getText();
+				String homePhone=celli5.getText();
 			
-			WebElement celli2=driver.findElement(By.xpath("//tr["+i+"]/td[2]"));
-			WebElement celli3=driver.findElement(By.xpath("//tr["+i+"]/td[3]"));
-			WebElement celli4=driver.findElement(By.xpath("//tr["+i+"]/td[4]/a"));
-			WebElement celli5=driver.findElement(By.xpath("//tr["+i+"]/td[5]"));
+				ContactData contact = new ContactData()
+				.withLastName(lastName)
+				.withFirstName(firstName)
+				.withEmail(email)
+				.withHomePhone(homePhone);
+				i=i+1;
 			
-			String lastName=celli2.getText();
-			String firstName=celli3.getText();
-			String email=celli4.getText();
-			String homePhone=celli5.getText();
-			
-			ContactData contact = new ContactData()
-			.withLastName(lastName)
-			.withFirstName(firstName)
-			.withEmail(email)
-			.withHomePhone(homePhone);
-			i=i+1;
-			
-			contacts.add(contact);
+				contacts.add(contact);
+			}	
+		}
+		else
+		{
+			List<WebElement> checkboxes = driver.findElements(By.name("selected[]"));
+			int i=0;
+			for (WebElement checkbox : checkboxes) 
+			{
+				initContactModification(i);
+				ContactData contact = getContactDataFromEditForm();
+				manager.navigateTo().homePage();
+				i++;
+				contacts.add(contact);
+			}	
 		}
 	return contacts;
+	}
+
+	private ContactData getContactDataFromEditForm() {
+		WebElement uiFitstName=driver.findElement(By.xpath("//input[2]"));
+		WebElement uiLastName=driver.findElement(By.xpath("//input[3]"));
+		WebElement uiAddress=driver.findElement(By.xpath("//textarea[1]"));
+		WebElement uiHomePhone=driver.findElement(By.xpath("//input[4]"));
+		WebElement uiMobilePhone=driver.findElement(By.xpath("//input[5]"));
+		WebElement uiWorkPhone=driver.findElement(By.xpath("//input[6]"));
+		WebElement uiEmail=driver.findElement(By.xpath("//input[7]"));
+		WebElement uiEmail2=driver.findElement(By.xpath("//input[8]"));
+		WebElement uiBDay=driver.findElement(By.xpath("//select[1]/option[1]"));
+		WebElement uiBMonth=driver.findElement(By.xpath("//select[2]/option[1]"));
+		WebElement uiBYear=driver.findElement(By.xpath("//input[9]"));
+		WebElement uiAddress2=driver.findElement(By.xpath("//textarea[2]"));
+		WebElement uiHomePhone2=driver.findElement(By.xpath("//input[10]"));
+		
+		String firstName=uiFitstName.getAttribute("value");
+		String lastName=uiLastName.getAttribute("value");
+		String address=uiAddress.getText();
+		String homePhone=uiHomePhone.getAttribute("value");
+		String mobilePhone=uiMobilePhone.getAttribute("value");
+		String workPhone=uiWorkPhone.getAttribute("value");
+		String email=uiEmail.getAttribute("value");
+		String email2=uiEmail2.getAttribute("value");
+		String bDay=uiBDay.getAttribute("value");
+		String bMonth=uiBMonth.getAttribute("value");
+		String bYear=uiBYear.getAttribute("value");
+		String address2=uiAddress2.getText();
+		String homePhone2=uiHomePhone2.getAttribute("value");
+		
+
+		ContactData contact = new ContactData()
+		.withFirstName(firstName)
+		.withLastName(lastName)
+		.withAddress(address)
+		.withHomePhone(homePhone)
+		.withMobilePhone(mobilePhone)
+		.withWorkPhone(workPhone)
+		.withEmail(email)
+		.withEmail2(email2)
+		.withBDay(bDay)
+		.withBMonth(bMonth)
+		.withBYear(bYear)
+		.withaddress2(address2)
+		.withPhone2(homePhone2)
+		;
+		return contact;
 	}
 
 	

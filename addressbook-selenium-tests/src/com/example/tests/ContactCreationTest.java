@@ -1,6 +1,7 @@
 package com.example.tests;
 
 
+import static com.example.fw.ContactHelper.CREATION;
 import static com.example.tests.ContactDataGenerator.loadContactsFromCsvFile;
 import static com.example.tests.ContactDataGenerator.loadContactsFromXmlFile;
 import static org.hamcrest.Matchers.equalTo;
@@ -28,14 +29,14 @@ public class ContactCreationTest extends TestBase{
 	app.navigateTo().mainPage();
 	
 	// save old stage
-	SortedListOf<ContactData> oldList = new SortedListOf<ContactData>(app.getHibernateHelper().listContacts());
+	SortedListOf<ContactData> oldList = new SortedListOf<ContactData>(app.getHibernateHelper().listContactsForMainPage());
 		
 	//actions
 	app.getContactHelper().createContact(contact);
 	
     
     // save new stage
-	SortedListOf<ContactData> newList = new SortedListOf<ContactData>(app.getHibernateHelper().listContacts());
+	SortedListOf<ContactData> newList = app.getContactHelper().getUIContacts(CREATION);
     
     // compare states
     //assertEquals(newList.size(), oldList.size()+1);

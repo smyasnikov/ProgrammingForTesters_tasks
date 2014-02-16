@@ -1,4 +1,5 @@
 package com.example.tests;
+
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -7,6 +8,7 @@ import java.util.Random;
 import org.testng.annotations.Test;
 
 import com.example.utils.SortedListOf;
+import static com.example.fw.ContactHelper.MODIFICATION;
 
 public class ContactModificationTest extends TestBase{
 	
@@ -16,7 +18,7 @@ public class ContactModificationTest extends TestBase{
 		app.navigateTo().mainPage();
 		
 		// save old stage
-		SortedListOf<ContactData> oldList = app.getContactHelper().getUIContacts();
+		SortedListOf<ContactData> oldList = new SortedListOf<ContactData>(app.getHibernateHelper().listContacts());
 		
 		Random rnd = new Random();
 	    int index = rnd.nextInt(oldList.size()-1);
@@ -26,7 +28,7 @@ public class ContactModificationTest extends TestBase{
 	    
 		
 		// save new stage
-	    SortedListOf<ContactData> newList = app.getContactHelper().getUIContacts();
+	    SortedListOf<ContactData> newList = app.getContactHelper().getUIContacts(MODIFICATION);
 	    
 	    // compare states
 	    assertThat(newList, equalTo(oldList.without(index).withAdded(contact)));

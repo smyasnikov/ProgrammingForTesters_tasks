@@ -6,6 +6,7 @@ import java.util.Random;
 import org.testng.annotations.Test;
 
 import com.example.utils.SortedListOf;
+import static com.example.fw.ContactHelper.CREATION;;
 
 public class ContactRemovalTest extends TestBase{
 	
@@ -15,7 +16,7 @@ public class ContactRemovalTest extends TestBase{
 		app.navigateTo().mainPage();
 		
 		// save old stage
-		SortedListOf<ContactData> oldList = app.getContactHelper().getUIContacts();
+		SortedListOf<ContactData> oldList = new SortedListOf<ContactData>(app.getHibernateHelper().listContactsForMainPage());
 		
 		Random rnd = new Random();
 	    int index = rnd.nextInt(oldList.size()-1);
@@ -25,7 +26,7 @@ public class ContactRemovalTest extends TestBase{
 		
 		
 		// save new stage
-	    SortedListOf<ContactData> newList = app.getContactHelper().getUIContacts();
+	    SortedListOf<ContactData> newList = app.getContactHelper().getUIContacts(CREATION);
 	    
 	    // compare states
 	    assertThat(newList, equalTo(oldList.without(index)));

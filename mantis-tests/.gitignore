@@ -1,0 +1,10 @@
+.settings/**
+bin/**
+test-output/**
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear 
+/src/com/example/tests/CreateMailUser.java

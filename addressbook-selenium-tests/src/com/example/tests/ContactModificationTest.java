@@ -8,6 +8,7 @@ import java.util.Random;
 import org.testng.annotations.Test;
 
 import com.example.utils.SortedListOf;
+
 import static com.example.fw.ContactHelper.MODIFICATION;
 
 public class ContactModificationTest extends TestBase{
@@ -32,6 +33,22 @@ public class ContactModificationTest extends TestBase{
 	    
 	    // compare states
 	    assertThat(newList, equalTo(oldList.without(index).withAdded(contact)));
+	    
+	  //custom check
+	    
+	    if ("yes".equals(app.getProperty("check.db")))
+	    {
+	    	if (readyToCheck()) {
+	    	assertThat(app.getModel().getContacts(), equalTo(app.getHibernateHelper().listContacts()));
+	    	}
+	    }
+	    
+	    if ("yes".equals(app.getProperty("check.ui")))
+	    {
+	    	if (readyToCheck()) {
+	    		assertThat(app.getModel().getContacts(), equalTo(app.getContactHelper().getUIContacts(MODIFICATION)));
+	    	}
+	    }
 
 	}
 

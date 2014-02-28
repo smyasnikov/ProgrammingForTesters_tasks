@@ -18,6 +18,8 @@ public class ApplicationManager {
 	private AccountHelper accountHelper;
 	private MailHelper mailHelper;
 	private JamesHelper jamesHelper;
+	private FtpHelper ftpHelper;
+	private AdminHelper adminHelper;
 	
 	
 	public ApplicationManager(Properties properties) {
@@ -26,6 +28,7 @@ public class ApplicationManager {
 
 	public void stop() {
 		 driver.quit();
+		 ftpHelper.restoreConfig();
 		}
 	
 	public WebDriver getDriver() {
@@ -82,6 +85,20 @@ public class ApplicationManager {
 			jamesHelper = new JamesHelper(this);	
 		}
 		return jamesHelper;
+	}
+	
+	public FtpHelper getFtpHelper() {
+		if (ftpHelper==null) {
+			ftpHelper = new FtpHelper(this);	
+		}
+		return ftpHelper;
+	}
+
+	public AdminHelper getAdminHelper() {
+		if (adminHelper==null) {
+			adminHelper = new AdminHelper(this);	
+		}
+		return adminHelper;
 	}
 
 }

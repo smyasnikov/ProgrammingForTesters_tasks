@@ -42,6 +42,21 @@ public class ContactCreationTest extends TestBase{
     //assertEquals(newList.size(), oldList.size()+1);
     
 	assertThat(newList, equalTo(oldList.withAdded(contact)));
+	
+	//custom check
     
+    if ("yes".equals(app.getProperty("check.db")))
+    {
+    	if (readyToCheck()) {
+    	assertThat(app.getModel().getContacts(), equalTo(app.getHibernateHelper().listContacts()));
+    	}
+    }
+    
+    if ("yes".equals(app.getProperty("check.ui")))
+    {
+    	if (readyToCheck()) {
+    		assertThat(app.getModel().getContacts(), equalTo(app.getContactHelper().getUIContacts(CREATION)));
+    	}
+    }
   }
 }

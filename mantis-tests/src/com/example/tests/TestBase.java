@@ -25,6 +25,7 @@ public class TestBase {
 		Properties properties = new Properties();
 		properties.load(new FileReader(new File(configFile)));
 		app = new ApplicationManager(properties);
+		app.getFtpHelper().installConfigWithoutCaptcha();
 		checkCounter = 0;
 		checkFrequency = Integer.parseInt(properties.getProperty("check.frequency", "0"));
 		}
@@ -42,6 +43,7 @@ public class TestBase {
 			return false;
 		}
 	}
+	
 	
 	@AfterClass
 	public void tearDown() throws Exception {

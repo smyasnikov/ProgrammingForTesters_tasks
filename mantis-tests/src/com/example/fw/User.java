@@ -2,9 +2,15 @@ package com.example.fw;
 
 public class User {
 
+	public String id;
 	public String login;
 	public String password;
 	public String email;
+
+	public User setId(String id) {
+		this.id = id;
+		return this;
+	}
 
 	public User setLogin(String login) {
 	
@@ -23,4 +29,19 @@ public class User {
 		return this;
 	}
 
+	public String getLogin() {
+		return login;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getId() {
+		return id;
+	}
 }

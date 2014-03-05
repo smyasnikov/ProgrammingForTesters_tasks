@@ -61,7 +61,7 @@ public class ContactHelper extends WebDriverHelperBase{
 				WebElement celli3=driver.findElement(By.xpath("//tr["+i+"]/td[3]"));
 				WebElement celli4=driver.findElement(By.xpath("//tr["+i+"]/td[4]/a"));
 				WebElement celli5=driver.findElement(By.xpath("//tr["+i+"]/td[5]"));
-			
+				
 				String lastName=celli2.getText();
 				String firstName=celli3.getText();
 				String email=celli4.getText();
@@ -139,6 +139,92 @@ public class ContactHelper extends WebDriverHelperBase{
 		.withPhone2(homePhone2)
 		;
 		return contact;
+	}
+	
+	
+	public SortedListOf<ContactData> getContactsForPrintPhone() {
+		SortedListOf<ContactData> contacts = new SortedListOf<ContactData>();
+		
+			List<WebElement> checkboxes = driver.findElements(By.name("selected[]"));
+			int i=2;
+			for (WebElement checkbox : checkboxes) 
+			{
+				WebElement celli2=driver.findElement(By.xpath("//tr["+i+"]/td[2]"));
+				WebElement celli3=driver.findElement(By.xpath("//tr["+i+"]/td[3]"));
+				WebElement celli5=driver.findElement(By.xpath("//tr["+i+"]/td[5]"));
+				
+				String lastName=celli2.getText();
+				String firstName=celli3.getText();
+				String homePhone=celli5.getText();
+			
+				ContactData contact = new ContactData()
+				.withLastName(lastName)
+				.withFirstName(firstName)
+				.withHomePhone(homePhone);
+				i=i+1;
+				contacts.add(contact);
+			}		
+	return contacts;
+	}
+	
+	
+	public SortedListOf<ContactData>  getContactDataFromPrintPhonesForm() {
+		SortedListOf<ContactData> contacts = new SortedListOf<ContactData>();
+				
+		List<WebElement> cells = driver.findElements(By.xpath("//tr/td"));
+		int qrtyRows = cells.size()/3;
+		
+		for (int i = 1; i <= qrtyRows; i++) {
+			
+			for (int j = 1; j <= 3; j++) {
+				WebElement cellij=driver.findElement(By.xpath("//tr["+i+"]/td["+j+"]"));
+				
+				if (cellij.getText().length()>2) {
+					// get values from field
+					String firstLastName = driver.findElement(By.xpath("//tr["+i+"]/td["+j+"]/b")).getText();
+					String firstName;
+					String lastName;
+					//if firstName and lastName don't contain spaces
+					
+					//don't work correctly with ends spaces, because getText() trim them
+					if(firstLastName.indexOf(" ", 0) == 0)
+					{
+						lastName=firstLastName.substring(1, firstLastName.length());
+						firstName=null;
+					}
+					else if (firstLastName.indexOf(" ", 0)==firstLastName.length()-1)
+					{
+						firstName=firstLastName.substring(0, firstLastName.length()-1);
+						lastName=null;
+					}
+					else
+					{
+						firstName=firstLastName.substring(0, firstLastName.indexOf(' ', 0));
+						lastName=firstLastName.substring(firstLastName.indexOf(' ', 0)+1, firstLastName.length());
+					}
+					
+					String field=cellij.getText();
+					String homePhone;
+					if (field.indexOf("\n", field.indexOf("H: ")+3)!=-1)
+					{
+					homePhone=field.substring(field.indexOf("H: ")+3, field.indexOf("\n", field.indexOf("H: ")+3));
+					}
+					else
+					{
+					homePhone=field.substring(field.indexOf("H: ")+3, field.length());
+					}
+					
+					ContactData contact = new ContactData()
+					.withLastName(lastName)
+					.withFirstName(firstName)
+					.withHomePhone(homePhone);
+				
+					contacts.add(contact);
+				}
+			}
+			
+		}
+	return contacts;
 	}
 
 	

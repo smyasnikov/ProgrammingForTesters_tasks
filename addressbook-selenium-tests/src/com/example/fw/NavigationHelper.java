@@ -72,6 +72,10 @@ public class NavigationHelper extends WebDriverHelperBase {
 		click(By.linkText("home"));
 	}
 
+	public void printPhonesPage() {
+		click(By.linkText("print phones"));
+	}
+
 	
 
 }
